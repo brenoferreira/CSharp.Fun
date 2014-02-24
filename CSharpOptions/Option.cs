@@ -8,22 +8,8 @@ namespace CSharpOptions
         T Value { get; }
     }
 
-    public static class Option
-    {
-        public static Option<T> Create<T>(T value)
-        {
-            if (value == null) return default(None<T>);
-            return new Some<T>(value);
-        }
 
-        public static Option<T> None<T>()
-        {
-            return default(None<T>);
-        }
-    }
-
-
-    struct Some<T> : Option<T>
+    struct Some<T> : Option<T>, IEquatable<Option<T>>
     {
         public Some(T value) : this()
         {
@@ -33,11 +19,21 @@ namespace CSharpOptions
 
         public bool HasValue { get; private set; }
         public T Value { get; private set; }
+
+        public bool Equals(Option<T> other)
+        {
+            return other.HasValue && other.Value.Equals(Value);
+        }
     }
 
-    struct None<T> : Option<T>
+    struct None<T> : Option<T>, IEquatable<Option<T>>
     {
         public bool HasValue { get { return false; } }
         public T Value { get { throw new Exception("No value"); } }
+
+        public bool Equals(Option<T> other)
+        {
+            return !other.HasValue;
+        }
     }
 }

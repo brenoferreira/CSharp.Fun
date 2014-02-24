@@ -45,6 +45,30 @@ namespace CSharpOptions.Testes
 
             logradouro.Should().Be("Winterfell");
         }
+
+        [Test]
+        public void FromValue()
+        {
+            var option = Option.From(1);
+
+            option.Should().Be(Option.From(1));
+        }
+
+        [Test]
+        public void ToOption()
+        {
+            var option = 1.ToOption();
+
+            option.Should().Be(Option.From(1));
+        }
+
+        [Test]
+        public void FromNull()
+        {
+            var option = Option.From<string>(null);
+
+            option.Should().Be(Option.None<string>());
+        }
     }
 
     public class Pessoa
