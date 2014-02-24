@@ -41,6 +41,7 @@
   <ItemGroup>
     <Compile Include="Option.cs" />
     <Compile Include="OptionExCreation.cs" />
+    <Compile Include="OptionExLinq.cs" />
     <Compile Include="OptionExMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

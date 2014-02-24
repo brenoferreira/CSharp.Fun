@@ -69,6 +69,49 @@ namespace CSharpOptions.Testes
 
             option.Should().Be(Option.None<string>());
         }
+
+        [Test]
+        public void LinqSelect()
+        {
+            var res = from x in Option.From(1)
+                      select x;
+
+            res.Should().Be(Option.From(1));
+        }
+
+        [Test]
+        public void LinqSelectMany()
+        {
+            var pessoa = new Pessoa
+            {
+                Nome = "Robb Stark",
+                Endereco = new Endereco
+                {
+                    Cidade = "Winterfell"
+                }
+            };
+
+            var res = from p in Option.From(pessoa)
+                      from e in p.Endereco.ToOption()
+                      select e.Cidade;
+
+            res.Should().Be(Option.From("Winterfell"));
+        }
+
+        [Test]
+        public void LinqSelectManyWithNull()
+        {
+            var pessoa = new Pessoa
+            {
+                Nome = "Robb Stark"
+            };
+
+            var res = (from p in Option.From(pessoa)
+                      from e in p.Endereco.ToOption()
+                      select e.Cidade).GetOrElse("Sem endereco");
+
+            res.Should().Be("Sem endereco");
+        }
     }
 
     public class Pessoa
