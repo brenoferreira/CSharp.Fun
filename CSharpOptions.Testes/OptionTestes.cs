@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
-using System;
 
 namespace CSharpOptions.Testes
 {
@@ -15,7 +14,7 @@ namespace CSharpOptions.Testes
                 Nome = "Robb Stark"
             };
 
-            var optionPessoa = Option<Pessoa>.Create(pessoa);
+            var optionPessoa = Option.Create(pessoa);
 
             var logradouro = optionPessoa
                                     .Map(p => p.Endereco)
@@ -37,7 +36,7 @@ namespace CSharpOptions.Testes
                 }
             };
 
-            var optionPessoa = Option<Pessoa>.Create(pessoa);
+            var optionPessoa = Option.Create(pessoa);
 
             var logradouro = optionPessoa
                                     .Map(p => p.Endereco)

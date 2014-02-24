@@ -1,74 +1,43 @@
 ﻿using System;
 namespace CSharpOptions
 {
-    public abstract class Option<T>
+    public interface Option<T>
     {
-        public static Option<T> Create()
-        {
-            return new None<T>();
-        }
+        bool HasValue { get; }
 
-        public static Option<T> Create(T value)
-        {
-            if (value == null)
-                return new None<T>();
+        T Value { get; }
+    }
 
+    public static class Option
+    {
+        public static Option<T> Create<T>(T value)
+        {
+            if (value == null) return default(None<T>);
             return new Some<T>(value);
         }
 
-        public readonly T Value;
-
-        public readonly bool HasValue;
-
-        protected Option()
+        public static Option<T> None<T>()
         {
-            Value = default(T);
-            HasValue = false;
+            return default(None<T>);
         }
+    }
 
-        protected Option(T value)
+
+    struct Some<T> : Option<T>
+    {
+        public Some(T value) : this()
         {
             Value = value;
             HasValue = true;
         }
 
-        public Option<B> FlatMap<B>(Func<T, Option<B>> func)
-        {
-            if (HasValue)
-                return func(Value);
-            return new None<B>();
-        }
+        public bool HasValue { get; private set; }
+        public T Value { get; private set; }
+    }
 
-        public Option<B> Map<B>(Func<T, B> func)
-        {
-            return FlatMap<B>(x => Option<B>.Create(func(x)));
-        }
-
-        public T GetOrElse(T defaultValue)
-        {
-            if (this is Some<T>)
-                return Value;
-
-            return defaultValue;
-        }
-
-        public static implicit operator Option<T>(T value)
-        {
-            return Option<T>.Create(value);
-        }
-        
-        internal class Some<T> : Option<T>
-        {
-            public Some(T value)
-                : base(value)
-            { }
-        }
-
-        internal class None<T> : Option<T>
-        {
-            public None()
-                : base()
-            { }
-        }
+    struct None<T> : Option<T>
+    {
+        public bool HasValue { get { return false; } }
+        public T Value { get { throw new Exception("No value"); } }
     }
 }
