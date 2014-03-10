@@ -1,7 +1,7 @@
 ﻿using System;
 namespace CSharpOptions
 {
-    public interface Option<T>
+    public interface Option<out T>
     {
         bool HasValue { get; }
 
