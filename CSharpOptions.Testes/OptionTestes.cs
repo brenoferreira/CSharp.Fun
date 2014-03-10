@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using System.Linq;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace CSharpOptions.Testes
@@ -111,6 +112,36 @@ namespace CSharpOptions.Testes
                       select e.Cidade).GetOrElse("Sem endereco");
 
             res.Should().Be("Sem endereco");
+        }
+
+        [Test]
+        public void WhereOperatorWithTruePredicate()
+        {
+            var pessoa = new Pessoa
+            {
+                Nome = "Robb Stark"
+            };
+
+            var res = from p in pessoa.ToOption()
+                      where p.Nome == "Robb Stark"
+                      select p.Nome;
+
+            res.GetOrElse("").Should().Be("Robb Stark");
+        }
+
+        [Test]
+        public void WhereOperatorWithFalsePredicate()
+        {
+            var pessoa = new Pessoa
+            {
+                Nome = "Robb Stark"
+            };
+
+            var res = from p in pessoa.ToOption()
+                      where p.Nome == "Jon Snow"
+                      select p;
+
+            res.Should().Be(Option.None<Pessoa>());
         }
     }
 

@@ -14,6 +14,12 @@ namespace CSharpOptions
             return FlatMap(option, x => Option.Create(func(x)));
         }
 
+        public static Option<T> Filter<T>(this Option<T> option, Func<T, Boolean> func)
+        {
+            if (!option.HasValue) return Option.None<T>();
+            return func(option.Value) ? option : Option.None<T>();
+        }
+
         public static T GetOrElse<T>(this Option<T> option, T defaultValue)
         {
             return option.HasValue ? option.Value : defaultValue;

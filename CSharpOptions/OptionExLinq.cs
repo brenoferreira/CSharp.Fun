@@ -23,5 +23,10 @@ namespace CSharpOptions
             return option.SelectMany(x => func(x).SelectMany(y => Option.Create(resultFunc(x, y))));
         }
 
+        public static Option<T> Where<T>(this Option<T> option, Func<T, Boolean> predicate)
+        {
+            return option.Filter(predicate);
+        }
+
     }
 }
