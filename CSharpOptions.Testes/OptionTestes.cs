@@ -72,6 +72,42 @@ namespace CSharpOptions.Testes
         }
 
         [Test]
+        public void FromNonNullNullable()
+        {
+            int? value = 1;
+            var option = Option.From(value);
+
+            option.Should().Be(Option.From(1));
+        }
+
+        [Test]
+        public void NonNullNullableToOption()
+        {
+            int? value = 1;
+            var option = value.ToOption();
+
+            option.Should().Be(Option.From(1));
+        }
+
+        [Test]
+        public void FromNullNullable()
+        {
+            int? value = null;
+            var option = Option.From(value);
+
+            option.Should().Be(Option.None<int>());
+        }
+
+        [Test]
+        public void NullNullableToOption()
+        {
+            int? value = null;
+            var option = value.ToOption();
+
+            option.Should().Be(Option.None<int>());
+        }
+
+        [Test]
         public void LinqSelect()
         {
             var res = from x in Option.From(1)

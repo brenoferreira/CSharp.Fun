@@ -1,4 +1,6 @@
-﻿namespace CSharpOptions
+﻿using System;
+
+namespace CSharpOptions
 {
     public static class Option
     {
@@ -18,7 +20,17 @@
             return value == null ? None<T>() : new Some<T>(value);
         }
 
+        public static Option<T> From<T>(T? value) where T : struct 
+        {
+            return value.HasValue ? Create(value.Value) : None<T>();
+        }
+
         public static Option<T> ToOption<T>(this T value)
+        {
+            return From(value);
+        }
+
+        public static Option<T> ToOption<T>(this T? value) where T : struct
         {
             return From(value);
         }
