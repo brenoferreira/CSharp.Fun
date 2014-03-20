@@ -15,7 +15,7 @@ namespace CSharpOptions.Testes
                 Nome = "Robb Stark"
             };
 
-            var optionPessoa = Option.Create(pessoa);
+            var optionPessoa = Option.From(pessoa);
 
             var logradouro = optionPessoa
                                     .Map(p => p.Endereco)
@@ -37,7 +37,7 @@ namespace CSharpOptions.Testes
                 }
             };
 
-            var optionPessoa = Option.Create(pessoa);
+            var optionPessoa = Option.From(pessoa);
 
             var logradouro = optionPessoa
                                     .Map(p => p.Endereco)

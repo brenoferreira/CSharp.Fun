@@ -11,7 +11,7 @@ namespace CSharpOptions
 
         public static Option<B> Map<T, B>(this Option<T> option, Func<T, B> func)
         {
-            return FlatMap(option, x => Option.Create(func(x)));
+            return FlatMap(option, x => Option.From(func(x)));
         }
 
         public static Option<T> Filter<T>(this Option<T> option, Func<T, Boolean> func)

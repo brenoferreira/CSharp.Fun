@@ -20,7 +20,7 @@ namespace CSharpOptions
 
         public static Option<V> SelectMany<T, U, V>(this Option<T> option, Func<T, Option<U>> func, Func<T, U, V> resultFunc)
         {
-            return option.SelectMany(x => func(x).SelectMany(y => Option.Create(resultFunc(x, y))));
+            return option.SelectMany(x => func(x).SelectMany(y => Option.From(resultFunc(x, y))));
         }
 
         public static Option<T> Where<T>(this Option<T> option, Func<T, Boolean> predicate)

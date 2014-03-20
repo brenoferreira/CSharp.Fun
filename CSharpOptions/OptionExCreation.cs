@@ -4,10 +4,9 @@ namespace CSharpOptions
 {
     public static class Option
     {
-        public static Option<T> Create<T>(T value)
+        public static Option<T> From<T>(T value)
         {
-            if (value == null) return default(None<T>);
-            return new Some<T>(value);
+            return value == null ? None<T>() : new Some<T>(value);
         }
 
         public static Option<T> None<T>()
@@ -15,14 +14,9 @@ namespace CSharpOptions
             return default(None<T>);
         }
 
-        public static Option<T> From<T>(T value)
+        public static Option<T> From<T>(T? value) where T : struct
         {
-            return value == null ? None<T>() : new Some<T>(value);
-        }
-
-        public static Option<T> From<T>(T? value) where T : struct 
-        {
-            return value.HasValue ? Create(value.Value) : None<T>();
+            return value != null ? From(value.Value) : None<T>();
         }
 
         public static Option<T> ToOption<T>(this T value)
