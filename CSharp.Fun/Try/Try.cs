@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharp.Fun
 {
@@ -17,7 +13,7 @@ namespace CSharp.Fun
     {
         private readonly Exception _exception;
 
-        public Failure(Exception exception)
+        internal Failure(Exception exception)
         {
             _exception = exception;
         }
@@ -33,7 +29,7 @@ namespace CSharp.Fun
     {
         private readonly T _value;
 
-        public Success(T value)
+        internal Success(T value)
         {
             _value = value;
         }

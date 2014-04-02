@@ -20,7 +20,7 @@ namespace CSharp.Fun.Testes
         public void CreateFailure()
         {
             var exception = new InvalidOperationException();
-            var tryVal = Fun.Try.From<int>(() =>
+            var tryVal = Try.From<int>(() =>
             {
                 throw exception;
             });
