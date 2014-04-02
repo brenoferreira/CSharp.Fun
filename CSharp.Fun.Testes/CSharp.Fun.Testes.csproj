@@ -49,7 +49,7 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpOptions\CSharp.Fun.csproj">
+    <ProjectReference Include="..\CSharp.Fun\CSharp.Fun.csproj">
       <Project>{ea413ea8-e8aa-40e7-8101-79e5c9476f73}</Project>
       <Name>CSharp.Fun</Name>
     </ProjectReference>

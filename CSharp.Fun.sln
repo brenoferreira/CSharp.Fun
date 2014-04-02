@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30110.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Fun", "CSharpOptions\CSharp.Fun.csproj", "{EA413EA8-E8AA-40E7-8101-79E5C9476F73}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Fun", "CSharp.Fun\CSharp.Fun.csproj", "{EA413EA8-E8AA-40E7-8101-79E5C9476F73}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{02CBDA02-833B-4FEB-864D-F7759C6F5D9E}"
 	ProjectSection(SolutionItems) = preProject
@@ -12,7 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{02CBDA
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Fun.Testes", "CSharpOptions.Testes\CSharp.Fun.Testes.csproj", "{5F0EC819-AE10-47A8-9317-734350ED1636}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSharp.Fun.Testes", "CSharp.Fun.Testes\CSharp.Fun.Testes.csproj", "{5F0EC819-AE10-47A8-9317-734350ED1636}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
