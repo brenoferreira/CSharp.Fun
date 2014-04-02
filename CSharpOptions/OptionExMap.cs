@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace CSharpOptions
+namespace CSharp.Fun
 {
     public static class OptionExMap
     {

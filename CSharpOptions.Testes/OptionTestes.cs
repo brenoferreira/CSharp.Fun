@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 
-namespace CSharpOptions.Testes
+namespace CSharp.Fun.Testes
 {
     [TestFixture]
     public class OptionTestes

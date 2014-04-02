@@ -7,8 +7,8 @@
     <ProjectGuid>{EA413EA8-E8AA-40E7-8101-79E5C9476F73}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSharpOptions</RootNamespace>
-    <AssemblyName>CSharpOptions</AssemblyName>
+    <RootNamespace>CSharp.Fun</RootNamespace>
+    <AssemblyName>CSharp.Fun</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

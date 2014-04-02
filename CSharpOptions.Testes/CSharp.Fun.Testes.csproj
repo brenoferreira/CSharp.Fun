@@ -6,8 +6,8 @@
     <ProjectGuid>{5F0EC819-AE10-47A8-9317-734350ED1636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CSharpOptions.Testes</RootNamespace>
-    <AssemblyName>CSharpOptions.Testes</AssemblyName>
+    <RootNamespace>CSharp.Fun.Testes</RootNamespace>
+    <AssemblyName>CSharp.Fun.Testes</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -63,9 +63,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CSharpOptions\CSharpOptions.csproj">
+    <ProjectReference Include="..\CSharpOptions\CSharp.Fun.csproj">
       <Project>{ea413ea8-e8aa-40e7-8101-79e5c9476f73}</Project>
-      <Name>CSharpOptions</Name>
+      <Name>CSharp.Fun</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>
