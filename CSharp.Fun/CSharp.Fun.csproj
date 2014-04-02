@@ -44,6 +44,8 @@
     <Compile Include="Option\OptionExLinq.cs" />
     <Compile Include="Option\OptionExMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Try\Try.cs" />
+    <Compile Include="Try\TryCreation.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
