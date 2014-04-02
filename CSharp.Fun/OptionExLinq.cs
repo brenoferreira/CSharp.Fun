@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CSharp.Fun
 {
@@ -13,14 +9,14 @@ namespace CSharp.Fun
             return option.FlatMap(func);
         }
 
-        public static Option<B> Select<T, B>(this Option<T> option, Func<T, B> func)
+        public static Option<B> Select<T, B>(this Option<T> option, Func<T, B> selector)
         {
-            return option.Map(func);
+            return option.Map(selector);
         }
 
-        public static Option<V> SelectMany<T, U, V>(this Option<T> option, Func<T, Option<U>> func, Func<T, U, V> resultFunc)
+        public static Option<V> SelectMany<T, U, V>(this Option<T> option, Func<T, Option<U>> selector, Func<T, U, V> resultSelector)
         {
-            return option.SelectMany(x => func(x).SelectMany(y => Option.From(resultFunc(x, y))));
+            return option.SelectMany(x => selector(x).SelectMany(y => Option.From(resultSelector(x, y))));
         }
 
         public static Option<T> Where<T>(this Option<T> option, Func<T, Boolean> predicate)

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace CSharp.Fun
+﻿namespace CSharp.Fun
 {
     public static class Option
     {
