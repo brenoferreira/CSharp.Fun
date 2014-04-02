@@ -1,5 +1,5 @@
 ﻿using System;
-using CSharp.Fun.Try;
+using CSharp.Fun;
 using FluentAssertions;
 using NUnit.Framework;
 
@@ -10,7 +10,7 @@ namespace CSharp.Fun.Testes
         [Test]
         public void CreateSuccess()
         {
-            var tryVal = Try.Try.From(() => 1);
+            var tryVal = Try.From(() => 1);
 
             tryVal.IsSuccess.Should().BeTrue();
             tryVal.Value.Should().Be(1);
@@ -20,7 +20,7 @@ namespace CSharp.Fun.Testes
         public void CreateFailure()
         {
             var exception = new InvalidOperationException();
-            var tryVal = Try.Try.From<int>(() =>
+            var tryVal = Fun.Try.From<int>(() =>
             {
                 throw exception;
             });

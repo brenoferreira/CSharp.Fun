@@ -1,4 +1,4 @@
-﻿namespace CSharp.Fun.Option
+﻿namespace CSharp.Fun
 {
     public static class Option
     {

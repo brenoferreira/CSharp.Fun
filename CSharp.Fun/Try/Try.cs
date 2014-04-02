@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CSharp.Fun.Try
+namespace CSharp.Fun
 {
     public interface Try<out T>
     {
