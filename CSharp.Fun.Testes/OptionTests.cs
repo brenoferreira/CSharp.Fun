@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using CSharp.Fun.Option;
+using FluentAssertions;
 using NUnit.Framework;
 
 namespace CSharp.Fun.Testes
@@ -10,9 +11,9 @@ namespace CSharp.Fun.Testes
             [Test]
             public void FromValue()
             {
-                var option = Option.From(1);
+                var option = Option.Option.From(1);
 
-                option.Should().Be(Option.From(1));
+                option.Should().Be(Option.Option.From(1));
             }
 
             [Test]
@@ -20,24 +21,24 @@ namespace CSharp.Fun.Testes
             {
                 var option = 1.ToOption();
 
-                option.Should().Be(Option.From(1));
+                option.Should().Be(Option.Option.From(1));
             }
 
             [Test]
             public void FromNull()
             {
-                var option = Option.From<string>(null);
+                var option = Option.Option.From<string>(null);
 
-                option.Should().Be(Option.None<string>());
+                option.Should().Be(Option.Option.None<string>());
             }
 
             [Test]
             public void FromNonNullNullable()
             {
                 int? value = 1;
-                var option = Option.From(value);
+                var option = Option.Option.From(value);
 
-                option.Should().Be(Option.From(1));
+                option.Should().Be(Option.Option.From(1));
             }
 
             [Test]
@@ -46,16 +47,16 @@ namespace CSharp.Fun.Testes
                 int? value = 1;
                 var option = value.ToOption();
 
-                option.Should().Be(Option.From(1));
+                option.Should().Be(Option.Option.From(1));
             }
 
             [Test]
             public void FromNullNullable()
             {
                 int? value = null;
-                var option = Option.From(value);
+                var option = Option.Option.From(value);
 
-                option.Should().Be(Option.None<int>());
+                option.Should().Be(Option.Option.None<int>());
             }
 
             [Test]
@@ -64,7 +65,7 @@ namespace CSharp.Fun.Testes
                 int? value = null;
                 var option = value.ToOption();
 
-                option.Should().Be(Option.None<int>());
+                option.Should().Be(Option.Option.None<int>());
             }
         }
 
@@ -78,7 +79,7 @@ namespace CSharp.Fun.Testes
                     Name = "Robb Stark"
                 };
 
-                var optionPessoa = Option.From(pessoa);
+                var optionPessoa = Option.Option.From(pessoa);
 
                 var logradouro = optionPessoa
                                         .Map(p => p.Address)
@@ -100,7 +101,7 @@ namespace CSharp.Fun.Testes
                     }
                 };
 
-                var optionPessoa = Option.From(pessoa);
+                var optionPessoa = Option.Option.From(pessoa);
 
                 var logradouro = optionPessoa
                                         .Map(p => p.Address)
@@ -117,10 +118,10 @@ namespace CSharp.Fun.Testes
             [Test]
             public void LinqSelect()
             {
-                var res = from x in Option.From(1)
+                var res = from x in Option.Option.From(1)
                           select x;
 
-                res.Should().Be(Option.From(1));
+                res.Should().Be(Option.Option.From(1));
             }
 
             [Test]
@@ -135,11 +136,11 @@ namespace CSharp.Fun.Testes
                     }
                 };
 
-                var res = from p in Option.From(pessoa)
+                var res = from p in Option.Option.From(pessoa)
                           from e in p.Address.ToOption()
                           select e.City;
 
-                res.Should().Be(Option.From("Winterfell"));
+                res.Should().Be(Option.Option.From("Winterfell"));
             }
 
             [Test]
@@ -150,7 +151,7 @@ namespace CSharp.Fun.Testes
                     Name = "Robb Stark"
                 };
 
-                var res = (from p in Option.From(pessoa)
+                var res = (from p in Option.Option.From(pessoa)
                            from e in p.Address.ToOption()
                            select e.City).GetOrElse("Sem endereco");
 
@@ -184,7 +185,7 @@ namespace CSharp.Fun.Testes
                           where p.Name == "Jon Snow"
                           select p;
 
-                res.Should().Be(Option.None<Person>());
+                res.Should().Be(Option.Option.None<Person>());
             }
         }
     }

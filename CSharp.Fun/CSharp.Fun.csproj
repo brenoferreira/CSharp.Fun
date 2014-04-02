@@ -39,10 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Option.cs" />
-    <Compile Include="OptionExCreation.cs" />
-    <Compile Include="OptionExLinq.cs" />
-    <Compile Include="OptionExMap.cs" />
+    <Compile Include="Option\Option.cs" />
+    <Compile Include="Option\OptionExCreation.cs" />
+    <Compile Include="Option\OptionExLinq.cs" />
+    <Compile Include="Option\OptionExMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

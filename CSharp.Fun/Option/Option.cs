@@ -1,5 +1,6 @@
 ﻿using System;
-namespace CSharp.Fun
+
+namespace CSharp.Fun.Option
 {
     public interface Option<out T>
     {
