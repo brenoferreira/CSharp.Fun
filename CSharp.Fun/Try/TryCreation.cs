@@ -19,6 +19,11 @@ namespace CSharp.Fun
 
         public static Try<T> From<T>(Func<T> throwable)
         {
+            return From(throwable, null);
+        }
+
+        public static Try<T> From<T>(Func<T> throwable, Action finallyAction)
+        {
             try
             {
                 var value = throwable();
@@ -28,6 +33,10 @@ namespace CSharp.Fun
             catch (Exception ex)
             {
                 return new Failure<T>(ex);
+            }
+            finally
+            {
+                if(finallyAction != null) finallyAction();
             }
         }
     }
