@@ -110,10 +110,19 @@ namespace CSharp.Fun.Testes
             [Test]
             public void Map()
             {
-                var tryVal = Try.From(1).FlatMap(n => Try.From(n + 1));
+                var tryVal = Try.From(1).Map(n => n + 1);
 
                 tryVal.IsSuccess.Should().BeTrue();
                 tryVal.Value.Should().Be(2);
+            }
+
+            [Test]
+            public void MapDifferentType()
+            {
+                var tryVal = Try.From(1).Map(n => n.ToString());
+
+                tryVal.IsSuccess.Should().BeTrue();
+                tryVal.Value.Should().Be("1");
             }
         }
     }
