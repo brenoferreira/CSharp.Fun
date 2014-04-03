@@ -20,7 +20,7 @@ namespace CSharp.Fun
 
         public bool IsSuccess { get { return false; } }
 
-        public T Value { get { throw new Exception("Failure has no value");} }
+        public T Value { get { throw _exception; } }
 
         public Exception Exception { get { return _exception; } }
     }
