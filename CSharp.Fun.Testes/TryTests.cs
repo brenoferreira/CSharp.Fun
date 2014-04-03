@@ -75,7 +75,7 @@ namespace CSharp.Fun.Testes
             [Test]
             public void FlatMapOnSuccess()
             {
-                var tryVal = Try.From(() => 1).FlatMap(n => Try.From(() => n + 1));
+                var tryVal = Try.From(1).FlatMap(n => Try.From(n + 1));
 
                 tryVal.IsSuccess.Should().BeTrue();
                 tryVal.Value.Should().Be(2);
@@ -88,7 +88,7 @@ namespace CSharp.Fun.Testes
                 var tryVal = Try.From<int>(() =>
                 {
                     throw exception;
-                }).FlatMap(n => Try.From(() => n + 1));
+                }).FlatMap(n => Try.From(n + 1));
 
                 tryVal.IsSuccess.Should().BeFalse();
                 tryVal.As<Failure<int>>().Exception.Should().Be(exception);
@@ -101,7 +101,7 @@ namespace CSharp.Fun.Testes
                 var tryVal = Try.From<int>(() =>
                 {
                     throw exception;
-                }).FlatMap(n => Try.From(() => n.ToString()));
+                }).FlatMap(n => Try.From(n.ToString()));
 
                 tryVal.IsSuccess.Should().BeFalse();
                 tryVal.As<Failure<string>>().Exception.Should().Be(exception);
