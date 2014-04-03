@@ -28,5 +28,14 @@ namespace CSharp.Fun.Testes
             tryVal.As<Failure<int>>().IsSuccess.Should().BeFalse();
             tryVal.As<Failure<int>>().Exception.Should().Be(exception);
         }
+
+        [Test]
+        public void CreateFromVoidReturningFunction()
+        {
+            var tryVal = Try.From(() => Console.WriteLine("void function"));
+
+            tryVal.IsSuccess.Should().BeTrue();
+            tryVal.Value.Should().Be(Unit.Instance);
+        }
     }
 }

@@ -8,6 +8,15 @@ namespace CSharp.Fun
 {
     public static class Try
     {
+        public static Try<Unit> From(Action throwable)
+        {
+            return From(() =>
+            {
+                throwable();
+                return Unit.Instance;
+            });
+        }
+
         public static Try<T> From<T>(Func<T> throwable)
         {
             try
