@@ -1,5 +1,4 @@
 ﻿using System;
-using CSharp.Fun;
 using FluentAssertions;
 using NUnit.Framework;
 
