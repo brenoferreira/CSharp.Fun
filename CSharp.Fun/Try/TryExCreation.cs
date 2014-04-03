@@ -35,5 +35,10 @@ namespace CSharp.Fun
                 if(finallyAction != null) finallyAction();
             }
         }
+
+        public static Try<T> From<T>(T value)
+        {
+            return new Success<T>(value);
+        }
     }
 }
