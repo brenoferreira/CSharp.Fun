@@ -169,6 +169,37 @@ namespace CSharp.Fun.Testes
                 tryVal.IsSuccess.Should().BeFalse();
                 tryVal.As<Failure<int>>().Exception.Should().Be(exception);
             }
+
+            [Test]
+            public void Filter()
+            {
+                var tryVal = Try.From(1).Filter(n => n == 1);
+
+                tryVal.IsSuccess.Should().BeTrue();
+                tryVal.Value.Should().Be(1);
+            }
+
+            [Test]
+            public void FilterWithFalsePredicate()
+            {
+                var tryVal = Try.From(1).Filter(n => n != 1);
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().BeOfType<NoSuchElementException>();
+            }
+
+            [Test]
+            public void FilterWithFailure()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From(() =>
+                {
+                    throw exception;
+                }).Filter(x => x != null);
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<Unit>>().Exception.Should().Be(exception);
+            }
         }
     }
 }

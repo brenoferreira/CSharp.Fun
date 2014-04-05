@@ -26,5 +26,21 @@ namespace CSharp.Fun
                 Try.From(mapper(tryValue.Value)) :
                 new Failure<B>(failure.Exception);
         }
+
+        public static Try<T> Filter<T>(this Try<T> tryValue, Func<T, Boolean> predicate)
+        {
+            try
+            {
+                if (!tryValue.IsSuccess) return tryValue;
+                
+                return predicate(tryValue.Value)
+                    ? tryValue
+                    : new Failure<T>(new NoSuchElementException("Predicate does not hold for " + tryValue.Value));
+            }
+            catch (Exception ex)
+            {
+                return new Failure<T>(ex);
+            }
+        }
     }
 }
