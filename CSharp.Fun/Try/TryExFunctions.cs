@@ -4,13 +4,13 @@ namespace CSharp.Fun
 {
     public static class TryExFunctions
     {
-        public static Try<B> FlatMap<T, B>(this Try<T> option, Func<T, Try<B>> mapper)
+        public static Try<B> FlatMap<T, B>(this Try<T> tryValue, Func<T, Try<B>> mapper)
         {
             try
             {
-                var failure = option as Failure<T>;
+                var failure = tryValue as Failure<T>;
                 return failure == null ?
-                    mapper(option.Value) :
+                    mapper(tryValue.Value) :
                     new Failure<B>(failure.Exception);
             }
             catch (Exception ex)
@@ -19,11 +19,11 @@ namespace CSharp.Fun
             }
         }
 
-        public static Try<B> Map<T, B>(this Try<T> option, Func<T, B> mapper)
+        public static Try<B> Map<T, B>(this Try<T> tryValue, Func<T, B> mapper)
         {
-            var failure = option as Failure<T>;
+            var failure = tryValue as Failure<T>;
             return failure == null ?
-                Try.From(mapper(option.Value)) :
+                Try.From(mapper(tryValue.Value)) :
                 new Failure<B>(failure.Exception);
         }
     }

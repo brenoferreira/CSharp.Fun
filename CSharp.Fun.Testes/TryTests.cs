@@ -108,6 +108,22 @@ namespace CSharp.Fun.Testes
             }
 
             [Test]
+            public void NewFailureIsNotFlatMapped()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).FlatMap<int, int>(n =>
+                {
+                    throw new InvalidOperationException(); ;
+                });
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
             public void Map()
             {
                 var tryVal = Try.From(1).Map(n => n + 1);
@@ -123,6 +139,35 @@ namespace CSharp.Fun.Testes
 
                 tryVal.IsSuccess.Should().BeTrue();
                 tryVal.Value.Should().Be("1");
+            }
+
+            [Test]
+            public void MapFailure()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).Map(n => n.ToString());
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<string>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void NewFailureIsNotMapped()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).Map<int, int>(n =>
+                {
+                    throw new InvalidOperationException();;
+                });
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().Be(exception);
             }
         }
     }
