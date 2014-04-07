@@ -1,6 +1,7 @@
 ﻿using System;
 using FluentAssertions;
 using NUnit.Framework;
+using System.Linq;
 
 namespace CSharp.Fun.Testes
 {
@@ -199,6 +200,27 @@ namespace CSharp.Fun.Testes
 
                 tryVal.IsSuccess.Should().BeFalse();
                 tryVal.As<Failure<Unit>>().Exception.Should().Be(exception);
+            }
+        }
+
+        public class TryLinqTests
+        {
+            [Test]
+            public void Select()
+            {
+                var tryVal = from t in Try.From(1)
+                        select t * 2;
+
+                tryVal.Should().Be(Try.From(2));
+            }
+
+            [Test]
+            public void SelectThrowingException()
+            {
+                var tryVal = from t in Try.From<int>(() => {throw new Exception();})
+                             select t * 2;
+
+                tryVal.IsSuccess.Should().BeFalse();
             }
         }
     }
