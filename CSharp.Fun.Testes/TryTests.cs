@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
@@ -206,19 +207,150 @@ namespace CSharp.Fun.Testes
         public class TryLinqTests
         {
             [Test]
-            public void Select()
+            public void SelectManyOnSuccess()
             {
-                var tryVal = from t in Try.From(1)
-                        select t * 2;
+                var tryVal = Try.From(1).SelectMany(n => Try.From(n + 1));
 
-                tryVal.Should().Be(Try.From(2));
+                tryVal.IsSuccess.Should().BeTrue();
+                tryVal.Value.Should().Be(2);
             }
 
             [Test]
-            public void SelectThrowingException()
+            public void SelectManyOnFailure()
             {
-                var tryVal = from t in Try.From<int>(() => {throw new Exception();})
-                             select t * 2;
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).SelectMany(n => Try.From(n + 1));
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void SelectManyOnFailureWithDifferentType()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).SelectMany(n => Try.From(n.ToString()));
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<string>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void NewFailureIsNotSelectedMany()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).SelectMany<int, int>(n =>
+                {
+                    throw new InvalidOperationException(); ;
+                });
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void Select()
+            {
+                var tryVal = Try.From(1).Select(n => n + 1);
+
+                tryVal.IsSuccess.Should().BeTrue();
+                tryVal.Value.Should().Be(2);
+            }
+
+            [Test]
+            public void SelectDifferentType()
+            {
+                var tryVal = Try.From(1).Select(n => n.ToString());
+
+                tryVal.IsSuccess.Should().BeTrue();
+                tryVal.Value.Should().Be("1");
+            }
+
+            [Test]
+            public void SelectFailure()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).Select(n => n.ToString());
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<string>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void NewFailureIsNotSelected()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From<int>(() =>
+                {
+                    throw exception;
+                }).Select<int, int>(n =>
+                {
+                    throw new InvalidOperationException(); ;
+                });
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void Where()
+            {
+                var tryVal = Try.From(1).Where(n => n == 1);
+
+                tryVal.IsSuccess.Should().BeTrue();
+                tryVal.Value.Should().Be(1);
+            }
+
+            [Test]
+            public void WhereWithFalsePredicate()
+            {
+                var tryVal = Try.From(1).Where(n => n != 1);
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<int>>().Exception.Should().BeOfType<NoSuchElementException>();
+            }
+
+            [Test]
+            public void WhereWithFailure()
+            {
+                var exception = new Exception();
+                var tryVal = Try.From(() =>
+                {
+                    throw exception;
+                }).Where(x => x != null);
+
+                tryVal.IsSuccess.Should().BeFalse();
+                tryVal.As<Failure<Unit>>().Exception.Should().Be(exception);
+            }
+
+            [Test]
+            public void SelectManyWithTwoTrySources()
+            {
+                var tryVal = from x in Try.From(2)
+                             from y in Try.From(3)
+                             select x*y;
+
+                tryVal.Should().Be(Try.From(6));
+            }
+
+            [Test]
+            public void SelectManyWithTwoTrySourcesAndOneIsFailure()
+            {
+                var tryVal = from x in Try.From(2)
+                             from y in Try.From<int>(() => {throw new Exception();})
+                             select x * y;
 
                 tryVal.IsSuccess.Should().BeFalse();
             }
