@@ -73,14 +73,14 @@ namespace CSharp.Fun.Testes
             [Test]
             public void OptionNoneTeste()
             {
-                var pessoa = new Person
+                var person = new Person
                 {
                     Name = "Robb Stark"
                 };
 
-                var optionPessoa = Option.From(pessoa);
+                var optionperson = Option.From(person);
 
-                var logradouro = optionPessoa
+                var logradouro = optionperson
                                         .Map(p => p.Address)
                                         .Map(e => e.City)
                                         .GetOrElse("Não informado");
@@ -91,7 +91,7 @@ namespace CSharp.Fun.Testes
             [Test]
             public void OptionSomeTeste()
             {
-                var pessoa = new Person
+                var person = new Person
                 {
                     Name = "Robb Stark",
                     Address = new Address
@@ -100,9 +100,9 @@ namespace CSharp.Fun.Testes
                     }
                 };
 
-                var optionPessoa = Option.From(pessoa);
+                var optionperson = Option.From(person);
 
-                var logradouro = optionPessoa
+                var logradouro = optionperson
                                         .Map(p => p.Address)
                                         .Map(e => e.City)
                                         .GetOrElse("Não informado");
@@ -126,7 +126,7 @@ namespace CSharp.Fun.Testes
             [Test]
             public void LinqSelectMany()
             {
-                var pessoa = new Person
+                var person = new Person
                 {
                     Name = "Robb Stark",
                     Address = new Address
@@ -135,7 +135,7 @@ namespace CSharp.Fun.Testes
                     }
                 };
 
-                var res = from p in Option.From(pessoa)
+                var res = from p in Option.From(person)
                           from e in p.Address.ToOption()
                           select e.City;
 
@@ -145,12 +145,12 @@ namespace CSharp.Fun.Testes
             [Test]
             public void LinqSelectManyWithNull()
             {
-                var pessoa = new Person
+                var person = new Person
                 {
                     Name = "Robb Stark"
                 };
 
-                var res = (from p in Option.From(pessoa)
+                var res = (from p in Option.From(person)
                            from e in p.Address.ToOption()
                            select e.City).GetOrElse("Sem endereco");
 
@@ -160,12 +160,12 @@ namespace CSharp.Fun.Testes
             [Test]
             public void WhereOperatorWithTruePredicate()
             {
-                var pessoa = new Person
+                var person = new Person
                 {
                     Name = "Robb Stark"
                 };
 
-                var res = from p in pessoa.ToOption()
+                var res = from p in person.ToOption()
                           where p.Name == "Robb Stark"
                           select p.Name;
 
@@ -175,12 +175,12 @@ namespace CSharp.Fun.Testes
             [Test]
             public void WhereOperatorWithFalsePredicate()
             {
-                var pessoa = new Person
+                var person = new Person
                 {
                     Name = "Robb Stark"
                 };
 
-                var res = from p in pessoa.ToOption()
+                var res = from p in person.ToOption()
                           where p.Name == "Jon Snow"
                           select p;
 
