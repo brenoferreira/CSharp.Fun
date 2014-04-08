@@ -49,6 +49,7 @@
     <Compile Include="Try\TryExCreation.cs" />
     <Compile Include="Try\TryExFunctions.cs" />
     <Compile Include="Try\TryExLinq.cs" />
+    <Compile Include="Try\TryExRecovery.cs" />
     <Compile Include="Unit.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
