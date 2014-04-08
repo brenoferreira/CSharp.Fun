@@ -385,6 +385,34 @@ namespace CSharp.Fun.Testes
 
                 success.Value.Should().Be(1);
             }
+
+            [Test]
+            public void RecoverWith()
+            {
+                var failure = Try.From<int>(() => { throw new Exception(); });
+
+                var success = failure.RecoverWith(ex => Try.From(1));
+
+                success.Value.Should().Be(1);
+            }
+
+            [Test]
+            public void RecoverWithThrowingSecondException()
+            {
+                var failure = Try.From<int>(() => { throw new Exception(); });
+
+                var success = failure.RecoverWith<int, int>(ex => { throw new Exception(); });
+
+                success.IsSuccess.Should().BeFalse();
+            }
+
+            [Test]
+            public void RecoverWithNonFailedTry()
+            {
+                var success = Try.From(1).RecoverWith(ex => Try.From(2));
+
+                success.Value.Should().Be(1);
+            }
         }
     }
 }
