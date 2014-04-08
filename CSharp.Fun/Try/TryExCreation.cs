@@ -26,6 +26,10 @@ namespace CSharp.Fun
 
                 return new Success<T>(value);
             }
+            catch (OutOfMemoryException)
+            {
+                throw;
+            }
             catch (Exception ex)
             {
                 return new Failure<T>(ex);

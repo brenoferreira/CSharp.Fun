@@ -1,5 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Security.Cryptography;
+using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using NUnit.Framework;
 using System.Linq;
@@ -165,7 +169,7 @@ namespace CSharp.Fun.Testes
                     throw exception;
                 }).Map<int, int>(n =>
                 {
-                    throw new InvalidOperationException();;
+                    throw new InvalidOperationException(); ;
                 });
 
                 tryVal.IsSuccess.Should().BeFalse();
@@ -340,7 +344,7 @@ namespace CSharp.Fun.Testes
             {
                 var tryVal = from x in Try.From(2)
                              from y in Try.From(3)
-                             select x*y;
+                             select x * y;
 
                 tryVal.Should().Be(Try.From(6));
             }
@@ -349,7 +353,7 @@ namespace CSharp.Fun.Testes
             public void SelectManyWithTwoTrySourcesAndOneIsFailure()
             {
                 var tryVal = from x in Try.From(2)
-                             from y in Try.From<int>(() => {throw new Exception();})
+                             from y in Try.From<int>(() => { throw new Exception(); })
                              select x * y;
 
                 tryVal.IsSuccess.Should().BeFalse();
@@ -412,6 +416,51 @@ namespace CSharp.Fun.Testes
                 var success = Try.From(1).RecoverWith(ex => Try.From(2));
 
                 success.Value.Should().Be(1);
+            }
+        }
+
+        public class UncatchableExceptions
+        {
+            /// <summary>
+            /// Ignored because StackOverflowException terminate application execution.
+            /// If running this test is necessary, run with debugger attached.
+            /// Just for documentation and proof that Try does not catch StackOverflowException.
+            /// </summary>
+            [Test]
+            [Ignore]
+            public void UncatchableStackOverflowException()
+            {
+                Try.From(UnboundRecursiveFunction);
+            }
+
+            private void UnboundRecursiveFunction()
+            {
+                UnboundRecursiveFunction();
+            }
+
+            [Test]
+            [ExpectedException(typeof(ThreadAbortException))]
+            public void UncatchableThreadAbortException()
+            {
+                Try.From(() => Thread.CurrentThread.Abort());
+            }
+
+            [Test]
+            [ExpectedException(typeof(OutOfMemoryException))]
+            public void UncatchableOutOfMemoryException()
+            {
+                Try.From(() =>
+                {
+                    var list = new List<IEnumerable<int>>();
+
+                    for (int i = 0; i < int.MaxValue; i++)
+                    {
+                        var array = new int[int.MaxValue];
+                        array[0] = 1;
+                        array[int.MaxValue - 1] = 2;
+                        list.Add(array);
+                    }
+                });
             }
         }
     }
