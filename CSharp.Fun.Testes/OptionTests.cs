@@ -28,7 +28,7 @@ namespace CSharp.Fun.Testes
             {
                 var option = Option.From<string>(null);
 
-                option.Should().Be(Option.None<string>());
+                option.Should().Be(Option.None);
             }
 
             [Test]
@@ -55,7 +55,7 @@ namespace CSharp.Fun.Testes
                 int? value = null;
                 var option = Option.From(value);
 
-                option.Should().Be(Option.None<int>());
+                option.Should().Be(Option.None);
             }
 
             [Test]
@@ -64,7 +64,7 @@ namespace CSharp.Fun.Testes
                 int? value = null;
                 var option = value.ToOption();
 
-                option.Should().Be(Option.None<int>());
+                option.Should().Be(Option.None);
             }
         }
 
@@ -184,7 +184,7 @@ namespace CSharp.Fun.Testes
                           where p.Name == "Jon Snow"
                           select p;
 
-                res.Should().Be(Option.None<Person>());
+                res.Should().Be(Option.None);
             }
         }
     }

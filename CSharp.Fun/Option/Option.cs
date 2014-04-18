@@ -2,33 +2,30 @@
 
 namespace CSharp.Fun
 {
-    public interface Option<out T>
+    public interface IOption<out T>
     {
         bool HasValue { get; }
 
         T Value { get; }
     }
 
-
-    struct Some<T> : Option<T>, IEquatable<Option<T>>
+    public abstract class Option<T> : IOption<T>
     {
-        private readonly bool _hasValue;
-        private readonly T _value;
+        public bool HasValue { get; protected set; }
+        public T Value { get; protected set; }
 
-        public Some(T value) : this()
+        public static implicit operator Option<T>(Option option)
         {
-            _value = value;
-            _hasValue = true;
+            return new None<T>();
         }
+    }
 
-        public bool HasValue
+    class Some<T> : Option<T>, IEquatable<Option<T>>
+    {
+        public Some(T value)
         {
-            get { return _hasValue; }
-        }
-
-        public T Value
-        {
-            get { return _value; }
+            Value = value;
+            HasValue = true;
         }
 
         public bool Equals(Option<T> other)
@@ -37,12 +34,16 @@ namespace CSharp.Fun
         }
     }
 
-    struct None<T> : Option<T>, IEquatable<Option<T>>
+    class None<T> : Option<T>, IEquatable<IOption<T>>
     {
-        public bool HasValue { get { return false; } }
-        public T Value { get { throw new Exception("No value"); } }
+        public new T Value { get { throw new Exception("No value"); } }
 
-        public bool Equals(Option<T> other)
+        public None()
+        {
+            HasValue = false;
+        }
+
+        public bool Equals(IOption<T> other)
         {
             return !other.HasValue;
         }
