@@ -3,14 +3,8 @@ using System.Collections.Generic;
 
 namespace CSharp.Fun
 {
-    internal interface IOption<out T>
-    {
-        bool HasValue { get; }
 
-        T Value { get; }
-    }
-
-    public abstract class Option<T> : IOption<T>, IEquatable<Option<T>>
+    public abstract class Option<T> : IEquatable<Option<T>>
     {
         public bool HasValue { get; protected set; }
 
