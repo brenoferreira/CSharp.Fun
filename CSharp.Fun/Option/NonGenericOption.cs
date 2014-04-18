@@ -1,24 +1,34 @@
-﻿namespace CSharp.Fun
+﻿using System;
+
+namespace CSharp.Fun
 {
-    public class Option
+    public class Option : IEquatable<Option>
     {
-        private static readonly Option none = new Option();
+        private static readonly Option NoneSingleton = new Option();
+        public static Option None
+        {
+            get { return NoneSingleton; }
+        }
 
         private Option() { }
 
-        public static Option None
+        public bool Equals(Option other)
         {
-            get { return none; }
+            return true;
         }
 
         public static Option<T> From<T>(T value)
         {
-            return value == null ? (Option<T>) None : new Some<T>(value);
+            return value != null 
+                ? new Some<T>(value)
+                : (Option<T>) None;
         }
 
         public static Option<T> From<T>(T? value) where T : struct
         {
-            return value != null ? From(value.Value) : None;
+            return value != null 
+                ? From(value.Value) 
+                : None;
         }
     }
 }
