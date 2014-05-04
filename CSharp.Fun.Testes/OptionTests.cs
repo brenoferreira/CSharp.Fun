@@ -11,7 +11,7 @@ namespace CSharp.Fun.Testes
             public void FromValue()
             {
                 var option = Option.From(1);
-
+                Assert.AreEqual(option, Option.From(1));
                 option.Should().Be(Option.From(1));
             }
 
@@ -28,7 +28,7 @@ namespace CSharp.Fun.Testes
             {
                 var option = Option.From<string>(null);
 
-                option.Should().Be(Option.None<string>());
+                option.Should().Be(Option.None);
             }
 
             [Test]
@@ -36,7 +36,7 @@ namespace CSharp.Fun.Testes
             {
                 int? value = 1;
                 var option = Option.From(value);
-
+                Assert.IsTrue(option.Equals(Option.From(1)));
                 option.Should().Be(Option.From(1));
             }
 
@@ -55,7 +55,7 @@ namespace CSharp.Fun.Testes
                 int? value = null;
                 var option = Option.From(value);
 
-                option.Should().Be(Option.None<int>());
+                option.Should().Be(Option.None);
             }
 
             [Test]
@@ -64,7 +64,7 @@ namespace CSharp.Fun.Testes
                 int? value = null;
                 var option = value.ToOption();
 
-                option.Should().Be(Option.None<int>());
+                option.Should().Be(Option.None);
             }
         }
 
@@ -110,7 +110,6 @@ namespace CSharp.Fun.Testes
                 logradouro.Should().Be("Winterfell");
             }
         }
-
 
         class LinqTests
         {
@@ -184,12 +183,12 @@ namespace CSharp.Fun.Testes
                           where p.Name == "Jon Snow"
                           select p;
 
-                res.Should().Be(Option.None<Person>());
+                res.Should().Be(Option.None);
             }
         }
     }
 
-    public class Person
+    class Person
     {
         public string Name { get; set; }
 
@@ -198,7 +197,12 @@ namespace CSharp.Fun.Testes
         public Address Address { get; set; }
     }
 
-    public class Address
+    class Worker : Person
+    {
+        public string Profession { get; set; }
+    }
+
+    class Address
     {
         public string City { get; set; }
     }
