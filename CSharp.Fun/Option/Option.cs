@@ -14,7 +14,9 @@ namespace CSharp.Fun
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as Option<T>);
+            if(obj is Option<T>) return Equals(obj as Option<T>);
+
+            return false;
         }
 
         public override int GetHashCode()

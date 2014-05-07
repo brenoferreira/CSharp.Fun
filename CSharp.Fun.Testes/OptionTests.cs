@@ -186,6 +186,33 @@ namespace CSharp.Fun.Testes
                 res.Should().Be(Option.None);
             }
         }
+
+		class EqualityTests
+		{
+			[Test]
+			public void SomeEqualsWhenValuesAreEqual()
+			{
+				Option.From(1).Should().Be(Option.From(1));
+			}
+
+			[Test]
+			public void NoneIsAlwaysTheSame()
+			{
+				Option.None.Should().BeSameAs(Option.None);
+			}
+
+			[Test]
+			public void IsNotEqualADifferentType()
+			{
+				Option.From(1).Equals(1).Should().BeFalse();
+			}
+
+			[Test]
+			public void NoneIsNotEqualADifferentType()
+			{
+				Option.None.Equals(1).Should().BeFalse();
+			}
+		}
     }
 
     class Person
