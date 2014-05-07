@@ -12,7 +12,7 @@ Option type provides better support for working with `null` values, and avoiding
 ```
 var option = Option.From<string>(null);
 
-option.Should().Be(Option.None<string>());
+option.Should().Be(Option.None);
 ```
 
 Includes support for Nullable types
@@ -20,7 +20,7 @@ Includes support for Nullable types
 int? value = null;
 var option = Option.From(value);
 
-option.Should().Be(Option.None<int>());
+option.Should().Be(Option.None);
 ```
 
 And also LINQ query operators.
