@@ -11,3 +11,6 @@ version: 0.1.{build}
 
 build_script:
   - cmd: build.bat
+
+#disabled test execution. build script already runs all tests.
+test: off
