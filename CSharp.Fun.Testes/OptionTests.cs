@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using NUnit.Framework;
+using System;
 
 namespace CSharp.Fun.Testes
 {
@@ -108,6 +109,14 @@ namespace CSharp.Fun.Testes
                                         .GetOrElse("Não informado");
 
                 logradouro.Should().Be("Winterfell");
+            }
+
+            [Test]
+            public void MapToVoidReturnsUnit()
+            {
+                var option = 1.ToOption();
+
+                option.Map(Console.WriteLine).Map(unit => unit.Should().Be(Unit.Instance));
             }
         }
 
