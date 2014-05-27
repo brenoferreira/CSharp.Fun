@@ -206,6 +206,14 @@ namespace CSharp.Fun.Testes
                 tryVal.IsSuccess.Should().BeFalse();
                 tryVal.As<Failure<Unit>>().Exception.Should().Be(exception);
             }
+
+            [Test]
+            public void MapToVoidReturnsUnit()
+            {
+                var tryVal = Try.From(1);
+
+                tryVal.Map(Console.WriteLine).Map(unit => unit.Should().Be(Unit.Instance));
+            }
         }
 
         public class TryLinqTests
