@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package >
+  <metadata>
+    <id>CSharp.Fun</id>
+    <version>1.0.0</version>
+    <authors>brenoferreira</authors>
+    <owners>brenoferreira</owners>
+    <projectUrl>https://github.com/brenoferreira/CSharp.Fun</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Implementation of a few Monadic types in C# to make life easier on a few pain points of working with the language</description>
+    <copyright>Copyright 2015</copyright>
+    <tags>functionalprogramming monads option optional try</tags>
+  </metadata>
+  <files>
+    <file src="bin/Release/CSharp.Fun.dll" target="lib" />
+  </files>
+</package>
