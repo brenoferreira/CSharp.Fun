@@ -71,7 +71,7 @@ tryVal.IsSuccess.Should().BeFalse();
 ```
 var failure = Try.From<int>(() => { throw new Exception(); });
 
-var success = failure.Recover(ex => 1);
+var success = failure.Recover((Exception ex) => 1);
 
 success.Value.Should().Be(1);
 ```
