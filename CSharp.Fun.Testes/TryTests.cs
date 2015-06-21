@@ -370,12 +370,32 @@ namespace CSharp.Fun.Testes
 
         public class RecoveryTests
         {
+			private static int ThrowExceptions(string value)
+			{
+				if (value == "InvalidOperationException")
+				{
+					throw new InvalidOperationException();
+				}
+				else if (value == "NullReferenceException")
+				{
+					throw new NullReferenceException();
+				}
+				else if (value == "ArgumentException")
+				{
+					throw new ArgumentException();
+				}
+				else
+				{
+					throw new Exception();
+				}
+			}
+
             [Test]
             public void Recover()
             {
                 var failure = Try.From<int>(() => { throw new Exception(); });
 
-                var success = failure.Recover(ex => 1);
+				var success = failure.Recover((Exception ex) => 1);
 
                 success.Value.Should().Be(1);
             }
@@ -383,27 +403,47 @@ namespace CSharp.Fun.Testes
             [Test]
             public void RecoverThrowingSecondException()
             {
-                var failure = Try.From<int>(() => { throw new Exception(); });
+				var failure = Try.From(() => ThrowExceptions(""));
 
-                var success = failure.Recover<int, int>(ex => { throw new Exception(); });
+				var stillFailure = failure.Recover((Exception ex) => ThrowExceptions (""));
 
-                success.IsSuccess.Should().BeFalse();
+                stillFailure.IsSuccess.Should().BeFalse();
             }
 
             [Test]
             public void RecoverNonFailedTry()
             {
-                var success = Try.From(1).Recover(ex => 2);
+				var success = Try.From(1).Recover((Exception ex) => 2);
 
                 success.Value.Should().Be(1);
             }
+
+			[Test]
+			public void RecoverTypedException()
+			{
+				var failure = Try.From<int>(() => ThrowExceptions("InvalidOperationException"));
+
+				var stillFailure = failure.Recover((InvalidOperationException ex) => 1);
+
+				stillFailure.Value.Should().Be(1);
+			}
+
+			[Test]
+			public void RecoverTypedExceptionButWrongExceptionType()
+			{
+				var failure = Try.From<int>(() => ThrowExceptions("InvalidOperationException"));
+
+				var stillFailure = failure.Recover((FormatException ex) => 1);
+
+				stillFailure.IsSuccess.Should().BeFalse();
+			}
 
             [Test]
             public void RecoverWith()
             {
                 var failure = Try.From<int>(() => { throw new Exception(); });
 
-                var success = failure.RecoverWith(ex => Try.From(1));
+				var success = failure.RecoverWith((Exception ex) => Try.From(1));
 
                 success.Value.Should().Be(1);
             }
@@ -411,17 +451,37 @@ namespace CSharp.Fun.Testes
             [Test]
             public void RecoverWithThrowingSecondException()
             {
-                var failure = Try.From<int>(() => { throw new Exception(); });
+				var failure = Try.From(() => ThrowExceptions(""));
 
-                var success = failure.RecoverWith<int, int>(ex => { throw new Exception(); });
+				var stillFailure = failure.RecoverWith((Exception ex) => Try.From(() => ThrowExceptions("")));
 
-                success.IsSuccess.Should().BeFalse();
+                stillFailure.IsSuccess.Should().BeFalse();
             }
+
+			[Test]
+			public void RecoverWithTypedException()
+			{
+				var failure = Try.From(() => ThrowExceptions("InvalidOperationException"));
+
+				var success = failure.RecoverWith((InvalidOperationException ex) => Try.From(1));
+
+				success.Value.Should().Be(1);
+			}
+
+			[Test]
+			public void RecoverWithTypedExceptionButWrongExceptionType()
+			{
+				var failure = Try.From(() => ThrowExceptions("InvalidOperationException"));
+
+				var stillFailure = failure.RecoverWith((FormatException ex) => Try.From(1));
+
+				stillFailure.IsSuccess.Should().BeFalse();
+			}
 
             [Test]
             public void RecoverWithNonFailedTry()
             {
-                var success = Try.From(1).RecoverWith(ex => Try.From(2));
+				var success = Try.From(1).RecoverWith((Exception ex) => Try.From(2));
 
                 success.Value.Should().Be(1);
             }
