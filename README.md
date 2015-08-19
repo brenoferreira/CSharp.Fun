@@ -2,6 +2,8 @@
 
 [![Build status](https://ci.appveyor.com/api/projects/status/dr07py0f19ibgun3)](https://ci.appveyor.com/project/brenoferreira/csharp-fun)
 
+`Install-Package CSharp.Fun`
+
 Implementation of a few Monadic types in C# to make life easier on a few pain points of working with C#.
 
 For now, it supports two types that help with `null` values and `Exceptions`, `Option` and `Try` respectively.
